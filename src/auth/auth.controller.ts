@@ -20,4 +20,9 @@ export class AuthController {
   ) {
     return this.authService.login(email, password);
   }
+
+  @Post('verify-token')
+  async verifyToken(@Body('token') token: string) {
+    return this.authService.verifyToken(token);
+  }
 }

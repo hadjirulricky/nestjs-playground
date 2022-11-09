@@ -4,6 +4,7 @@ import {
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { Firebase } from 'src/firebase';
+import { FirebaseAdmin } from 'src/firebase.admin';
 
 @Injectable()
 export class AuthService {
@@ -20,7 +21,9 @@ export class AuthService {
 
   async login(email: string, password: string) {
     const auth = Firebase.getFirebaseAuth();
+
     const result = await signInWithEmailAndPassword(auth, email, password);
+
     if (result) {
       const accesstoken = await result.user.getIdToken();
       console.log(accesstoken);
@@ -30,5 +33,9 @@ export class AuthService {
       console.log('Login Failed');
     }
     return;
+  }
+
+  async verifyToken(token: string) {
+    await FirebaseAdmin.verifyToken(token);
   }
 }
