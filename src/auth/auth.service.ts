@@ -1,6 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { FirebaseAdminService } from 'src/firebase-admin/firebase-admin.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
+import { LoginDto, SignupDto } from './dto';
 
 @Injectable()
 export class AuthService {
@@ -9,10 +10,10 @@ export class AuthService {
     private firebaseAdminService: FirebaseAdminService,
   ) {}
 
-  async signUp(email: string, password: string) {
+  async signUp(signupDto: SignupDto) {
     const result = await this.firebaseService.createUserWithEmailAndPassword(
-      email,
-      password,
+      signupDto.email,
+      signupDto.password,
     );
     if (result) {
       console.log('Account Created');
@@ -22,10 +23,10 @@ export class AuthService {
     return;
   }
 
-  async login(email: string, password: string) {
+  async login(loginDto: LoginDto) {
     const result = await this.firebaseService.signInWithEmailAndPassword(
-      email,
-      password,
+      loginDto.email,
+      loginDto.password,
     );
 
     if (result) {
