@@ -1,12 +1,14 @@
+import { Injectable } from '@nestjs/common';
 import { auth } from 'firebase-admin';
 import { initializeApp } from 'firebase-admin/app';
 
-export class FirebaseAdmin {
-  static init() {
+@Injectable()
+export class FirebaseAdminService {
+  constructor() {
     initializeApp();
   }
 
-  static async verifyToken(token: string) {
+  async verifyToken(token: string) {
     const decodedIdToken = await auth().verifyIdToken(token);
     if (decodedIdToken) {
       console.log(decodedIdToken.email);
@@ -14,5 +16,7 @@ export class FirebaseAdmin {
     } else {
       console.log('Invalid token');
     }
+
+    return decodedIdToken;
   }
 }
