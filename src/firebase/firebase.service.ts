@@ -17,12 +17,12 @@ export class FirebaseService {
   constructor() {
     // Your web app's Firebase configuration
     const firebaseConfig: FirebaseOptions = {
-      apiKey: 'AIzaSyAOKq1UUgtShdIxsyy6-7rTh2NDwe_xies',
-      authDomain: 'sankana-4c6dc.firebaseapp.com',
-      projectId: 'sankana-4c6dc',
-      storageBucket: 'sankana-4c6dc.appspot.com',
-      messagingSenderId: '554048979666',
-      appId: '1:554048979666:web:8a01df8841ddfd4e0c230b',
+      apiKey: 'AIzaSyBUlMHliSgqlooFLO5kZaS6_X5vbtmulh0',
+      authDomain: 'playground-47eb5.firebaseapp.com',
+      projectId: 'playground-47eb5',
+      storageBucket: 'playground-47eb5.appspot.com',
+      messagingSenderId: '492755707078',
+      appId: '1:492755707078:web:8fa4f95ba13a88735023c7',
     };
 
     // Initialize Firebase
