@@ -13,11 +13,6 @@ export class AuthController {
 
   @Post('login')
   async login(@Body() loginDto: LoginDto) {
-    return this.authService.login(loginDto);
-  }
-
-  @Post('verify-token')
-  async verifyToken(@Body('token') token: string) {
-    return this.authService.verifyToken(token);
+    return await this.authService.login(loginDto);
   }
 }

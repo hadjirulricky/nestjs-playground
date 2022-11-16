@@ -1,4 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { FirebaseApp, FirebaseOptions, initializeApp } from 'firebase/app';
 import {
   createUserWithEmailAndPassword,
@@ -26,12 +30,20 @@ export class FirebaseService {
   }
 
   async signInWithEmailAndPassword(email: string, password: string) {
-    const auth = getAuth(this.instance);
-    return await signInWithEmailAndPassword(auth, email, password);
+    try {
+      const auth = getAuth(this.instance);
+      return await signInWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      throw new UnauthorizedException();
+    }
   }
 
   async createUserWithEmailAndPassword(email: string, password: string) {
-    const auth = getAuth(this.instance);
-    return await createUserWithEmailAndPassword(auth, email, password);
+    try {
+      const auth = getAuth(this.instance);
+      return await createUserWithEmailAndPassword(auth, email, password);
+    } catch (error) {
+      throw new BadRequestException();
+    }
   }
 }

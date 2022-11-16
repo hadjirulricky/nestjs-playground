@@ -11,36 +11,16 @@ export class AuthService {
   ) {}
 
   async signUp(signupDto: SignupDto) {
-    const result = await this.firebaseService.createUserWithEmailAndPassword(
+    return await this.firebaseService.createUserWithEmailAndPassword(
       signupDto.email,
       signupDto.password,
     );
-    if (result) {
-      console.log('Account Created');
-    } else {
-      console.log('Failed to create account');
-    }
-    return;
   }
 
   async login(loginDto: LoginDto) {
-    const result = await this.firebaseService.signInWithEmailAndPassword(
+    return await this.firebaseService.signInWithEmailAndPassword(
       loginDto.email,
       loginDto.password,
     );
-
-    if (result) {
-      const accesstoken = await result.user.getIdToken();
-      console.log(accesstoken);
-      console.log(result.user);
-      console.log('Login success');
-    } else {
-      console.log('Login Failed');
-    }
-    return;
-  }
-
-  async verifyToken(token: string) {
-    await this.firebaseAdminService.verifyToken(token);
   }
 }
