@@ -1,14 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { FirebaseAdminService } from 'src/firebase-admin/firebase-admin.service';
 import { FirebaseService } from 'src/firebase/firebase.service';
 import { LoginDto, SignupDto } from './dto';
 
 @Injectable()
 export class AuthService {
-  constructor(
-    private firebaseService: FirebaseService,
-    private firebaseAdminService: FirebaseAdminService,
-  ) {}
+  constructor(private firebaseService: FirebaseService) {}
 
   async signUp(signupDto: SignupDto) {
     return await this.firebaseService.createUserWithEmailAndPassword(
