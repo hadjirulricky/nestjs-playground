@@ -1,4 +1,5 @@
-import { Body, Controller, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Post, Req, UseGuards } from '@nestjs/common';
+import { Request } from 'express';
 import { AuthGuard } from 'src/auth/auth.guard';
 import { AddNoteDto } from './dto';
 import { NotesService } from './notes.service';
@@ -9,7 +10,8 @@ export class NotesController {
   constructor(private notesService: NotesService) {}
 
   @Post()
-  async add(@Body() addNoteDto: AddNoteDto) {
-    return await this.notesService.add(addNoteDto);
+  async add(@Req() request: Request, @Body() addNoteDto: AddNoteDto) {
+    const userId: string = request.headers.userId?.toString() ?? '';
+    return await this.notesService.add(userId, addNoteDto);
   }
 }

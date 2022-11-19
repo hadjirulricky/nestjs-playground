@@ -1,19 +1,20 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { FirestoreService } from 'src/firestore/firestore.service';
-import { AddNoteDto, NoteDto } from './dto';
+import { AddNoteDto } from './dto';
 
 @Injectable()
 export class NotesService {
   constructor(private firestoreService: FirestoreService) {}
 
-  async add(addNoteDto: AddNoteDto) {
+  async add(userId: string, addNoteDto: AddNoteDto) {
     const result = await this.firestoreService.add('notes', {
       title: addNoteDto.title,
       note: addNoteDto.note,
+      user: { id: userId },
     });
 
     if (result) {
-      return new NoteDto(result.id, addNoteDto.title, addNoteDto.note);
+      return { message: 'Note added successfully.' };
     } else {
       throw new BadRequestException();
     }

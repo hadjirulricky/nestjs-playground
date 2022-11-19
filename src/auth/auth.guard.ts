@@ -13,15 +13,15 @@ export class AuthGuard implements CanActivate {
       return false;
     }
 
-    return this.validateRequest(accessToken.replace('Bearer', '').trim());
-  }
+    const userId = await this.firebaseAdminService.verifyToken(
+      accessToken.replace('Bearer', '').trim(),
+    );
 
-  private async validateRequest(token: string) {
-    const validAccount = await this.firebaseAdminService.verifyToken(token);
-
-    if (!validAccount) {
+    if (!userId) {
       return false;
     }
+
+    request.headers.userId = userId;
 
     return true;
   }
