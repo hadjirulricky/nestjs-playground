@@ -13,7 +13,11 @@ export class FirebaseAdminService {
   }
 
   async verifyToken(token: string) {
-    const decodedIdToken = await auth().verifyIdToken(token);
-    return await decodedIdToken;
+    try {
+      const decodedIdToken = await auth().verifyIdToken(token);
+      return decodedIdToken;
+    } catch (error) {
+      console.log(error);
+    }
   }
 }
