@@ -19,4 +19,14 @@ export class NotesService {
       throw new BadRequestException();
     }
   }
+
+  async delete(userId: string, noteId: string) {
+    const result = await this.firestoreService.delete(userId, 'notes', noteId);
+
+    if (result) {
+      return { message: 'Note deleted successfully.' };
+    } else {
+      throw new BadRequestException();
+    }
+  }
 }

@@ -14,4 +14,18 @@ export class FirestoreService {
       throw new BadRequestException();
     }
   }
+
+  async delete(userId: string, collection: string, documentId: string) {
+    try {
+      const db = this.firebaseAdminService.getFirestore();
+      const data = await db
+        .collection(collection)
+        .where('user.id', '==', userId)
+        .get();
+
+      return await data.docs.find((doc) => doc.id == documentId)?.ref.delete();
+    } catch (error) {
+      throw new BadRequestException();
+    }
+  }
 }
