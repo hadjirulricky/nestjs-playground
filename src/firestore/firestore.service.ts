@@ -11,6 +11,7 @@ export class FirestoreService {
       const db = this.firebaseAdminService.getFirestore();
       return await db.collection(collection).add(object);
     } catch (error) {
+      console.log(error);
       throw new BadRequestException();
     }
   }
@@ -25,6 +26,30 @@ export class FirestoreService {
 
       return await data.docs.find((doc) => doc.id == documentId)?.ref.delete();
     } catch (error) {
+      console.log(error);
+      throw new BadRequestException();
+    }
+  }
+
+  async update(
+    userId: string,
+    collection: string,
+    documentId: string,
+    // eslint-disable-next-line @typescript-eslint/ban-types
+    object: any,
+  ) {
+    try {
+      const db = this.firebaseAdminService.getFirestore();
+      const data = await db
+        .collection(collection)
+        .where('user.id', '==', userId)
+        .get();
+
+      return await data.docs
+        .find((doc) => doc.id == documentId)
+        ?.ref.update(object);
+    } catch (error) {
+      console.log(error);
       throw new BadRequestException();
     }
   }
