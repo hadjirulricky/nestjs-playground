@@ -1,11 +1,15 @@
 import { Injectable } from '@nestjs/common';
-import { auth, firestore } from 'firebase-admin';
+import { auth, credential, firestore } from 'firebase-admin';
 import { initializeApp } from 'firebase-admin/app';
+import * as serviceAccount from '../../google_cred.json';
 
 @Injectable()
 export class FirebaseAdminService {
   constructor() {
-    initializeApp();
+    const firebaseServiceAccount: object = serviceAccount;
+    initializeApp({
+      credential: credential.cert(firebaseServiceAccount),
+    });
   }
 
   getFirestore() {
