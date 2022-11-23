@@ -53,4 +53,15 @@ export class FirestoreService {
       throw new BadRequestException();
     }
   }
+
+  async get(userId: string, collection: string) {
+    try {
+      const db = this.firebaseAdminService.getFirestore();
+      const ref = db.collection(collection);
+      return (await ref.where('user.id', '==', userId).get()).docs;
+    } catch (error) {
+      console.log(error);
+      throw new BadRequestException();
+    }
+  }
 }

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Delete,
+  Get,
   Param,
   Post,
   Put,
@@ -38,5 +39,11 @@ export class NotesController {
   ) {
     const userId: string = request.headers.userId?.toString() ?? '';
     return await this.notesService.update(userId, id, updateNoteDto);
+  }
+
+  @Get()
+  async get(@Req() request: Request) {
+    const userId: string = request.headers.userId?.toString() ?? '';
+    return await this.notesService.get(userId);
   }
 }

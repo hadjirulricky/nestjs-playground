@@ -1,6 +1,6 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { FirestoreService } from 'src/firestore/firestore.service';
-import { AddNoteDto, UpdateNoteDto } from './dto';
+import { AddNoteDto, NoteDto, UpdateNoteDto } from './dto';
 
 @Injectable()
 export class NotesService {
@@ -40,6 +40,19 @@ export class NotesService {
 
     if (result) {
       return { message: 'Note updated successfully.' };
+    } else {
+      throw new BadRequestException();
+    }
+  }
+
+  async get(userId: string) {
+    const result = await this.firestoreService.get(userId, 'notes');
+
+    if (result) {
+      const data = result.map((doc) => {
+        return new NoteDto(doc.id, doc.data()['title'], doc.data()['note']);
+      });
+      return { data: data };
     } else {
       throw new BadRequestException();
     }
